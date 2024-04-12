@@ -1,3 +1,5 @@
+
+
 document.getElementById('start-btn').addEventListener('click', () => {
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
         // Speech Recognition Setup
@@ -29,6 +31,11 @@ function processCommand(command) {
     const responseText = `Du hast gesagt: ${command}`; // "You said" in German
 
     speak(responseText);
+    const parentdiv = document.getElementById("thing");
+    const childdiv = document.createElement("div")
+    const span = document.createElement("span");
+    span.textContent = command
+    parentdiv.appendChild(span)
 }
 
 function speak(text) {
