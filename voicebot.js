@@ -35,7 +35,8 @@ function processCommand(command) {
     const childdiv = document.createElement("div")
     const span = document.createElement("span");
     span.textContent = command
-    parentdiv.appendChild(span)
+    childdiv.appendChild(span)
+    parentdiv.appendChild(childdiv)
 }
 
 function speak(text) {
