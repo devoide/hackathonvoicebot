@@ -1,30 +1,39 @@
+document.addEventListener("DOMContentLoaded", load_content);
+
+function load_content(){
+    speak("Hallo, wie kann ich dir helfen?");
+    buttonlistener();
+}
 
 
-document.getElementById('start-btn').addEventListener('click', () => {
-    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-        // Speech Recognition Setup
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
-        recognition.lang = 'de-DE'; // Set language to German
-        recognition.interimResults = false;
-        recognition.maxResults = 1;
 
-        recognition.start();
+function buttonlistener(){
+    document.getElementById('start-btn').addEventListener('click', () => {
+        if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+            // Speech Recognition Setup
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'de-DE'; // Set language to German
+            recognition.interimResults = false;
+            recognition.maxResults = 1;
 
-        recognition.onresult = function(event) {
-            const speechResult = event.results[0][0].transcript;
-            console.log('Ergebnis erhalten: ' + speechResult); // "Result received" in German
-            processCommand(speechResult);
-        };
+            recognition.start();
 
-        recognition.onerror = function(event) {
-            console.error('Fehler bei der Erkennung: ' + event.error); // "Error in recognition" in German
-        };
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript;
+                console.log('Ergebnis erhalten: ' + speechResult); // "Result received" in German
+                processCommand(speechResult);
+            };
 
-    } else {
-        alert('Ihr Browser unterstützt keine Spracherkennung. Bitte verwenden Sie Google Chrome.'); // "Your browser does not support Speech Recognition. Please try Google Chrome." in German
-    }
-});
+            recognition.onerror = function(event) {
+                console.error('Fehler bei der Erkennung: ' + event.error); // "Error in recognition" in German
+            };
+
+        } else {
+            alert('Ihr Browser unterstützt keine Spracherkennung. Bitte verwenden Sie Google Chrome.'); // "Your browser does not support Speech Recognition. Please try Google Chrome." in German
+        }
+    });
+}
 
 function processCommand(command) {
     // Dummy processing for demonstration, adjust as needed
