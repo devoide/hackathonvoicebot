@@ -1,34 +1,51 @@
-document.getElementById('start-btn').addEventListener('click', () => {
-    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-        // Speech Recognition Setup
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
-        recognition.lang = 'de-DE'; // Set language to German
-        recognition.interimResults = false;
-        recognition.maxResults = 1;
+document.addEventListener("DOMContentLoaded", load_content);
 
-        recognition.start();
+function load_content(){
+    speak("Hallo, wie kann ich dir helfen?");
+    buttonlistener();
+}
 
-        recognition.onresult = function(event) {
-            const speechResult = event.results[0][0].transcript;
-            console.log('Ergebnis erhalten: ' + speechResult); // "Result received" in German
-            processCommand(speechResult);
-        };
 
-        recognition.onerror = function(event) {
-            console.error('Fehler bei der Erkennung: ' + event.error); // "Error in recognition" in German
-        };
 
-    } else {
-        alert('Ihr Browser unterstützt keine Spracherkennung. Bitte verwenden Sie Google Chrome.'); // "Your browser does not support Speech Recognition. Please try Google Chrome." in German
-    }
-});
+function buttonlistener(){
+    document.getElementById('start-btn').addEventListener('click', () => {
+        if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+            // Speech Recognition Setup
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'de-DE'; // Set language to German
+            recognition.interimResults = false;
+            recognition.maxResults = 1;
+
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript;
+                console.log('Ergebnis erhalten: ' + speechResult); // "Result received" in German
+                processCommand(speechResult);
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Fehler bei der Erkennung: ' + event.error); // "Error in recognition" in German
+            };
+
+        } else {
+            alert('Ihr Browser unterstützt keine Spracherkennung. Bitte verwenden Sie Google Chrome.'); // "Your browser does not support Speech Recognition. Please try Google Chrome." in German
+        }
+    });
+}
 
 function processCommand(command) {
     // Dummy processing for demonstration, adjust as needed
     const responseText = `Du hast gesagt: ${command}`; // "You said" in German
 
     speak(responseText);
+    const parentdiv = document.getElementById("thing");
+    const childdiv = document.createElement("div")
+    const span = document.createElement("span");
+    span.textContent = command
+    childdiv.appendChild(span)
+    parentdiv.appendChild(childdiv)
 }
 
 function speak(text) {
